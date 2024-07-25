@@ -1,4 +1,4 @@
-package com.example.sample;
+package com.sample;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
