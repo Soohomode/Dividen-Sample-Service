@@ -1,5 +1,8 @@
 package com.sample;
 
+import com.sample.model.Company;
+import com.sample.model.ScrapedResult;
+import com.sample.scraper.YahooFinanceScraper;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,13 +19,14 @@ public class SampleApplication {
 	public static void main(String[] args) {
 //		SpringApplication.run(SampleApplication.class, args);
 
-		String s = "Hello my name is %s";
+		System.out.println(System.currentTimeMillis());
 
-		String[] names = {"SOOHO", "CHAEUN", "SOHEE"};
+		YahooFinanceScraper scraper = new YahooFinanceScraper();
+		ScrapedResult result = scraper.scrap(Company.builder()
+				.ticker("O")
+				.build());
 
-		for (String name : names) {
-			System.out.println(String.format(s, name));
-		}
+		System.out.println(result);
 
 
 //		try {
