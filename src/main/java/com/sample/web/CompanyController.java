@@ -1,11 +1,16 @@
 package com.sample.web;
 
 import com.sample.model.Company;
+import com.sample.persist.entity.CompanyEntity;
 import com.sample.service.CompanyService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/company") // 경로에 공통되는 부분은 RequestMapping 으로
@@ -22,8 +27,9 @@ public class CompanyController {
 
     // 회사 리스트를 조회하는 api
     @GetMapping
-    public ResponseEntity<?> searchCompany() {
-        return null;
+    public ResponseEntity<?> searchCompany(final Pageable pageable) {
+        Page<CompanyEntity> companies = this.companyService.getAllCompany(pageable);
+        return ResponseEntity.ok(companies);
     }
 
     /**
