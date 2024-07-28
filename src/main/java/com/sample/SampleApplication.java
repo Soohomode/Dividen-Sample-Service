@@ -2,6 +2,7 @@ package com.sample;
 
 import com.sample.model.Company;
 import com.sample.model.ScrapedResult;
+import com.sample.scraper.Scraper;
 import com.sample.scraper.YahooFinanceScraper;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -21,10 +22,11 @@ public class SampleApplication {
 
 		System.out.println(System.currentTimeMillis());
 
-		YahooFinanceScraper scraper = new YahooFinanceScraper();
-		ScrapedResult result = scraper.scrap(Company.builder()
-				.ticker("O")
-				.build());
+		Scraper scraper = new YahooFinanceScraper();
+//		ScrapedResult result = scraper.scrap(Company.builder()
+//				.ticker("O")
+//				.build());
+		var result = scraper.scrapCompanyByTicker("MMM");
 
 		System.out.println(result);
 
