@@ -16,6 +16,6 @@ spring:
 
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:j2:mem:sample;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:sample;DB_CLOSE_DELAY=-1
     username: sa
     password:

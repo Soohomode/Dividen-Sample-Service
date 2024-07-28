@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CompanyRepository extends JpaRepository<CompanyEntity, Long> { // <레포지토리가 활용하게될 엔티티, 엔티티의 PK 의 타입>
-
+    boolean existsByTicker(String ticker);
 }
