@@ -90,7 +90,9 @@ public class YahooFinanceScraper implements Scraper {
             Document document = Jsoup.connect(url).get();
             Element titleEle = document.getElementsByClass("yf-3a2v0c").get(0);
             // 깔끔하게 가져오기 위해 문자열 후처리
-            String title = titleEle.text().split(" - ")[0].trim();
+            String titleWithTicker = titleEle.text().trim();
+            // 정규 표현식을 사용하여 회사명 뒤의 티커를 제거
+            String title = titleWithTicker.replaceAll("\\s*\\([^\\)]*\\)$", "").trim();
             // abc - def - xyz => def
             return Company.builder()
                     .ticker(ticker)
