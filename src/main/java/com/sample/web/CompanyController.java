@@ -22,7 +22,7 @@ public class CompanyController {
     // 배당금 조회시 자동완성 기능 api
     @GetMapping("/autocomplete")
     public ResponseEntity<?> autocomplete(@RequestParam String keyword) {
-        var result = this.companyService.autocomplete(keyword);
+        var result = this.companyService.getCompanyNamesByKeyword(keyword);
 
         return ResponseEntity.ok(result);
     }
@@ -31,6 +31,7 @@ public class CompanyController {
     @GetMapping
     public ResponseEntity<?> searchCompany(final Pageable pageable) {
         Page<CompanyEntity> companies = this.companyService.getAllCompany(pageable);
+
         return ResponseEntity.ok(companies);
     }
 
@@ -57,6 +58,7 @@ public class CompanyController {
     // 회사 삭제 api
     @DeleteMapping
     public ResponseEntity<?> deleteCompany() {
+
         return null;
     }
 
