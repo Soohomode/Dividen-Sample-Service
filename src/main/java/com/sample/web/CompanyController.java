@@ -22,7 +22,9 @@ public class CompanyController {
     // 배당금 조회시 자동완성 기능 api
     @GetMapping("/autocomplete")
     public ResponseEntity<?> autocomplete(@RequestParam String keyword) {
-        return null;
+        var result = this.companyService.autocomplete(keyword);
+
+        return ResponseEntity.ok(result);
     }
 
     // 회사 리스트를 조회하는 api
@@ -47,6 +49,7 @@ public class CompanyController {
         }
 
         Company company = this.companyService.save(ticker);
+        this.companyService.addAutocompleteKeyword(company.getName()); // 자동완성 trie 에도 회사명 저장
 
         return ResponseEntity.ok(company);
     }

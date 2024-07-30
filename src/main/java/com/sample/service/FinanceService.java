@@ -30,7 +30,7 @@ public class FinanceService {
 
         // 2. 조회된 회사 ID로 배당금 정보 조회
         List<DividendEntity> dividendEntities = this.dividendRepository.findAllByCompanyId(company.getId());
-
+        
         // 3. 결과 조합 후 반환
         // List 로 되어 있는 dividend 을 가공한다
 //        List<Dividend> dividends = new ArrayList<>();
