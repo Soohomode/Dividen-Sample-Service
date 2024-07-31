@@ -33,13 +33,15 @@ public class FinanceService {
         
         // 3. 결과 조합 후 반환
         // List 로 되어 있는 dividend 을 가공한다
-//        List<Dividend> dividends = new ArrayList<>();
-//        for (var entity : dividendEntities) {
-//            dividends.add(Dividend.builder()
-//                    .date(entity.getDate())
-//                    .dividend(entity.getDividend())
-//                    .build());
-//        }
+        /*
+        List<Dividend> dividends = new ArrayList<>();
+        for (var entity : dividendEntities) {
+            dividends.add(Dividend.builder()
+                    .date(entity.getDate())
+                    .dividend(entity.getDividend())
+                    .build());
+        }
+         */
         // ⬆️ 위 주석과 동일한 결과이지만 다른 방식
         List<Dividend> dividends = dividendEntities.stream()
                 .map(e -> Dividend.builder()

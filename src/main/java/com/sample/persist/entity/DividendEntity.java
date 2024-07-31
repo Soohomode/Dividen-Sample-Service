@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @NoArgsConstructor
-@Table(
+@Table( // 스케쥴링 중복 방지
         uniqueConstraints = {
                 @UniqueConstraint(
                         columnNames = { "companyId", "date" }
