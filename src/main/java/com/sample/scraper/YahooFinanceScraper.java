@@ -63,10 +63,7 @@ public class YahooFinanceScraper implements Scraper {
                 }
 
                 // 정상적으로 개월수를 받아온 경우
-                dividends.add(Dividend.builder()
-                        .date(LocalDateTime.of(year, month, day, 0, 0))
-                        .dividend(dividend)
-                        .build());
+                dividends.add(new Dividend(LocalDateTime.of(year, month, day, 0, 0), dividend));
 
 //                System.out.println(year + "/" + month + "/" + day + " -> " + dividend);
 
@@ -94,10 +91,7 @@ public class YahooFinanceScraper implements Scraper {
             // 정규 표현식을 사용하여 회사명 뒤의 티커를 제거
             String title = titleWithTicker.replaceAll("\\s*\\([^\\)]*\\)$", "").trim();
             // abc - def - xyz => def
-            return Company.builder()
-                    .ticker(ticker)
-                    .name(title)
-                    .build();
+            return new Company(ticker, title);
         } catch (IOException e) {
             e.printStackTrace();
         }
