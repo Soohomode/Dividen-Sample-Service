@@ -8,6 +8,7 @@ import com.sample.persist.DividendRepository;
 import com.sample.persist.entity.CompanyEntity;
 import com.sample.persist.entity.DividendEntity;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class FinanceService {
     private final CompanyRepository companyRepository;
     private final DividendRepository dividendRepository;
 
+    @Cacheable(key = "#companyName", value = "finance")
     public ScrapedResult getDividendByCompanyName(String companyName) {
 
         // 1. 회사명을 기준으로 회사 정보를 조회
