@@ -1,9 +1,11 @@
 package com.sample.web;
 
 import com.sample.model.Company;
+import com.sample.model.constants.CacheKey;
 import com.sample.persist.entity.CompanyEntity;
 import com.sample.service.CompanyService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import java.util.List;
 public class CompanyController {
 
     private final CompanyService companyService;
+    private final CacheManager redisCacheManager;
 
     // 배당금 조회시 자동완성 기능 api
     @GetMapping("/autocomplete")
@@ -45,7 +48,7 @@ public class CompanyController {
 
     // 회사 저장 api
     @PostMapping
-    @PreAuthorize("hasRole('WRITE')") // 쓰기 권한 있는 사용자만 접근 권한
+    @PreAuthorize("hasRole('WRITE')") // 쓰기(관리자) 권한 있는 사용자만 접근 권한
     public ResponseEntity<?> addCompany(@RequestBody Company request) {
         String ticker = request.getTicker().trim();// trim 앞뒤 공백 제거
         if (ObjectUtils.isEmpty(ticker)) {
@@ -59,10 +62,17 @@ public class CompanyController {
     }
 
     // 회사 삭제 api
-    @DeleteMapping
-    public ResponseEntity<?> deleteCompany() {
+    @DeleteMapping("/{ticker}")
+    @PreAuthorize("hasRole('WRITE')") // 쓰기(관리자) 권한 있는 사용자만 접근 권한
+    public ResponseEntity<?> deleteCompany(@PathVariable String ticker) {
+        String companyName = this.companyService.deleteCompany(ticker);
+        // 캐시데이터도 삭제
+        this.clearFinanceCache(companyName);
+        return ResponseEntity.ok(companyName);
+    }
 
-        return null;
+    public void clearFinanceCache(String companyName) {
+        this.redisCacheManager.getCache(CacheKey.KEY_FINANCE).evict(companyName);
     }
 
 }
