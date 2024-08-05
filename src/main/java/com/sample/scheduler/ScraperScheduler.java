@@ -50,6 +50,7 @@ public class ScraperScheduler {
                         boolean exists = this.dividendRepository.existsByCompanyIdAndDate(e.getCompanyId(), e.getDate());
                         if (!exists) { // 존재 하지 않는다면,
                             this.dividendRepository.save(e);
+                            log.info("insert new dividend => " + e.toString());
                         }
                     });
 
